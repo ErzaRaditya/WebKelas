@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gudang Cerita Digital XII TKJ 2</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- HEADER & NAVBAR -->
+  <header>
+    <div class="header-banner">
+      <h1 class="brand-title"><i class="fa-solid fa-book-bookmark"></i> Gudang Cerita Digital XII TKJ 2</h1>
+      <p class="tagline">Gudang Cerita & Manuskrip Digital Kelas XII TKJ 2</p>
+    </div>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="#home"><i class="fa-solid fa-compass"></i> Home</a></li>
+        <li><a href="#stories"><i class="fa-solid fa-book-open"></i> Stories</a></li>
+        <li><a href="#store"><i class="fa-solid fa-store"></i> E-Book Store</a></li>
+        <li><a href="#contact"><i class="fa-solid fa-feather"></i> Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="cart-btn" onclick="openCartModal()">
+          <i class="fa-solid fa-basket-shopping"></i> Keranjang (<span id="cart-count">0</span>)
+        </button>
+        <button class="btn-auth" id="authBtn" onclick="openLoginModal()">
+          <i class="fa-solid fa-key"></i> Login
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HOME SECTION -->
+  <section id="home" class="hero">
+    <div class="hero-card">
+      <h2>Selamat datang di perpustakaan digital XII TKJ 2</h2>
+      <div class="divider">✦ 🏛️ ✦</div>
+      <p>Arsip digital tempat bersemayamnya legenda klasik, cerita rakyat Nusantara, hingga kisah epik hasil susunan 10 kelompok siswa. Setiap manuskrip dikemas dalam format PDF eksklusif yang siap dikoleksi dan dipelajari nilai moralnya.</p>
+      <a href="#store" class="btn-gold">Jelajahi E-Book Store</a>
+    </div>
+  </section>
+
+  <!-- STORIES SECTION -->
+  <section id="stories" class="section">
+    <div class="section-title">
+      <h2>Galeri Cerita & Manuskrip</h2>
+      <p>Ketuk kartu cerita sekali untuk memperbesar tampilan (*Zoom In*), ketuk sekali lagi untuk mengembalikan ke ukuran semula.</p>
+    </div>
+    <div class="stories-grid" id="storiesGrid">
+      <!-- 10 Kartu Kelompok di-generate via JavaScript -->
+    </div>
+  </section>
+
+  <!-- E-BOOK STORE SECTION -->
+  <section id="store" class="section store-bg">
+    <div class="section-title">
+      <h2>E-Book Store & Katalog Lisensi</h2>
+      <p>Beli lisensi e-book digital untuk membuka fitur akses membaca langsung dan mengunduh dokumen PDF lengkap.</p>
+    </div>
+    <div class="store-grid" id="storeGrid">
+      <!-- Item Toko di-generate via JavaScript -->
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="section">
+    <div class="section-title">
+      <h2>Layanan Kontak & Helpdesk</h2>
+      <p>Gunakan saluran kontak resmi di bawah ini untuk kritik, saran, atau bantuan akses e-book:</p>
+    </div>
+    <div class="contact-box">
+      <div class="contact-card">
+        <i class="fa-brands fa-whatsapp contact-icon"></i>
+        <h3>WhatsApp Helpdesk</h3>
+        <p><strong>083822807233</strong></p>
+        <a href="https://wa.me/6283822807233" target="_blank" class="btn-contact">Hubungi via WA</a>
+      </div>
+      <div class="contact-card">
+        <i class="fa-solid fa-envelope-open-text contact-icon"></i>
+        <h3>Email Resmi</h3>
+        <p><strong>raffaraditya141@gmail.com</strong></p>
+        <a href="mailto:raffaraditya141@gmail.com" class="btn-contact">Kirim Email</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL BACA PDF -->
+  <div class="modal" id="pdfModal">
+    <div class="modal-content large">
+      <span class="close-btn" onclick="closePdfModal()">&times;</span>
+      <h2 id="pdfTitle" class="modal-heading">Viewer Manuskrip Digital</h2>
+      <p id="pdfStatus" class="pdf-status"></p>
+      <div id="pdfContainer">
+        <iframe id="pdfFrame" src="" width="100%" height="500px"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL LOGIN -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeLoginModal()">&times;</span>
+      <h2 class="modal-heading">Login Anggota Library</h2>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>Username / Nama Pengguna:</label>
+          <input type="text" id="username" placeholder="Masukkan nama kamu" required>
+        </div>
+        <div class="form-group">
+          <label>Password:</label>
+          <input type="password" id="password" placeholder="Masukkan password" required>
+        </div>
+        <button type="submit" class="btn-gold block">Masuk Sesi</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL CHECKOUT & KERANJANG -->
+  <div class="modal" id="cartModal">
+    <div class="modal-content checkout-modal">
+      <span class="close-btn" onclick="closeCartModal()">&times;</span>
+      <h2 class="modal-heading">Checkout & Pembelian E-Book</h2>
+      
+      <div class="cart-items" id="cartItemsList"></div>
+
+      <div class="checkout-summary">
+        <div>Total Item: <span id="cartCountSummary">0</span> E-Book</div>
+        <div class="total-price">Total Tagihan: <span id="cartTotal">Rp 0</span></div>
+      </div>
+
+      <form id="checkoutForm" onsubmit="handleCheckout(event)">
+        <h3 class="form-sub-title">1. Data Pembeli</h3>
+        <div class="form-group">
+          <input type="text" id="buyerName" placeholder="Nama Lengkap Pembeli" required>
+        </div>
+        <div class="form-group">
+          <input type="email" id="buyerEmail" placeholder="Email untuk Pengiriman PDF" required>
+        </div>
+
+        <h3 class="form-sub-title">2. Pilih Metode Pembayaran</h3>
+        <div class="payment-options">
+          <label><input type="radio" name="payment" value="ShopeePay" checked> 🧡 ShopeePay / S-Pay</label>
+          <label><input type="radio" name="payment" value="DANA"> 💙 DANA E-Wallet</label>
+          <label><input type="radio" name="payment" value="BCA"> 🏛️ Bank BCA Transfer</label>
+          <label><input type="radio" name="payment" value="BRI"> 🏛️ Bank BRI Transfer</label>
+        </div>
+
+        <button type="submit" class="btn-gold block">Bayar Sekarang & Buka Akses PDF</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Gudang Cerita Digital XII TKJ 2. Hak Cipta Dilindungi Perpustakaan Digital Kelas.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
